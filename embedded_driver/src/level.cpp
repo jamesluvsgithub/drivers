@@ -9,7 +9,7 @@
 
 namespace
 {
-    constexpr uint8_t MATRIX_WIDTH = 8;
+    constexpr uint8_t MATRIX_WIDTH  = 8;
     constexpr uint8_t MATRIX_HEIGHT = 8;
 
     constexpr float LEVEL_TOLERANCE = 0.1f;
@@ -18,6 +18,7 @@ namespace
     constexpr uint32_t GREEN = 0x00FF00;
 
     constexpr uint LED_PIN = 13;
+    constexpr bool LED_ON  = true;
     constexpr uint32_t BLINK_INTERVAL_MS = 1000;
 
 
@@ -38,12 +39,14 @@ namespace
             // x axis tilt
             uint8_t col = (x > 0.0f) ? 7 : 0;
             neomatrix.set_pixel(3, col, RED);
+            gpio_put(LED_PIN, LED_ON);
         }
         else
         {
             // y axis tilt
             uint8_t row = (y > 0.0f) ? 0 : 7;
             neomatrix.set_pixel(row, 3, RED);
+            gpio_put(LED_PIN, LED_ON);
         }
 
         neomatrix.write();
@@ -57,14 +60,12 @@ int main()
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
-    bool led_on = true;
-
     LIS3DH lis3dh;
     NeoMatrix neomatrix(MATRIX_WIDTH, MATRIX_HEIGHT);
 
     if (!lis3dh.init() || !neomatrix.init())
     {
-        gpio_put(LED_PIN, led_on);
+        gpio_put(LED_PIN, LED_ON);
     }
 
     while (true)
