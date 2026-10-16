@@ -5,9 +5,10 @@
 
 namespace 
 {
-    constexpr uint DATA_PIN = 5;
-    constexpr uint POWER_PIN = 10;
+    constexpr uint WS2812_PIN = 16;
+    constexpr uint WS2812_POWER_PIN = 10;
     constexpr float WS2812_FREQ = 800000.0f;
+    constexpr bool RGBW_OFF = false;
 }
 
 
@@ -25,14 +26,14 @@ NeoMatrix::NeoMatrix(uint8_t width, uint8_t height)
 
 bool NeoMatrix::init(void)
 {
-    gpio_init(POWER_PIN);
-    gpio_set_dir(POWER_PIN, GPIO_OUT);
-    gpio_put(POWER_PIN, 1);
+    gpio_init(WS2812_POWER_PIN);
+    gpio_set_dir(WS2812_POWER_PIN, GPIO_OUT);
+    gpio_put(WS2812_POWER_PIN, 1);
 
     // Load the WS2812 program into PIO instruction memory.
     if (!pio_can_add_program(pio, &ws2812_program)) 
     {
-        gpio_put(POWER_PIN, 0);
+        gpio_put(WS2812_POWER_PIN, 0);
         return false;
     }
 
@@ -44,14 +45,14 @@ bool NeoMatrix::init(void)
     if (claimed_sm < 0) 
     {
         pio_remove_program(pio, &ws2812_program, offset);
-        gpio_put(POWER_PIN, 0);
+        gpio_put(WS2812_POWER_PIN, 0);
         return false;
     }
 
     sm = static_cast<uint>(claimed_sm);
 
     // false = RGB (24 bits), not RGBW (32 bits).
-    ws2812_program_init(pio, sm, offset, DATA_PIN, WS2812_FREQ, false);
+    ws2812_program_init(pio, sm, offset, WS2812_PIN, WS2812_FREQ, RGBW_OFF);
 
     initialized = true;
     clear_pixels();
@@ -77,7 +78,7 @@ void NeoMatrix::clear_pixels(void)
 {
     for (uint16_t i = 0; i < num_rows * num_cols; ++i) 
     {
-        pixels[i] = 0;
+        pixels[i] = 0x0000;
     }
 }
 
@@ -105,7 +106,5 @@ void NeoMatrix::write(void)
         pio_sm_put_blocking(pio, sm, grb << 8);
     }
 
-    // WS2812 latches the frame after the data line stays low.
     sleep_us(80);
-
 }
