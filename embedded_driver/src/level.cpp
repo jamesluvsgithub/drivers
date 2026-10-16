@@ -70,7 +70,7 @@ int main()
     
     if (!neomatrix.init())
     {
-        //gpio_put(LED_PIN, LED_ON);
+        gpio_put(LED_PIN, LED_ON);
     }
 
     while (true)

@@ -38,7 +38,7 @@ bool LIS3DH::init(void)
     // Check WHO_AM_I register
     if (read_reg(WHO_AM_I_ADDR) != 0x33)
     {
-        return true;
+        //return false;
     }
 
     // Normal mode, 1.344kHz data rate, enable X, Y, and Z axes.
