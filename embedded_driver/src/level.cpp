@@ -39,14 +39,14 @@ namespace
             // x axis tilt
             uint8_t col = (x > 0.0f) ? 7 : 0;
             neomatrix.set_pixel(3, col, RED);
-            gpio_put(LED_PIN, LED_ON);
+            //gpio_put(LED_PIN, LED_ON);
         }
         else
         {
             // y axis tilt
             uint8_t row = (y > 0.0f) ? 0 : 7;
             neomatrix.set_pixel(row, 3, RED);
-            gpio_put(LED_PIN, LED_ON);
+            //gpio_put(LED_PIN, LED_ON);
         }
 
         neomatrix.write();
