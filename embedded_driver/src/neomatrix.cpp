@@ -20,14 +20,6 @@ NeoMatrix::NeoMatrix(uint8_t width, uint8_t height)
     sm = 0;
     offset = 0;
     initialized = false;
-
-    pixels = new uint32_t[width * height]();
-}
-
-
-NeoMatrix::~NeoMatrix()
-{
-    delete[] pixels;
 }
 
 

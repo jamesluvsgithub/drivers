@@ -13,9 +13,10 @@
 class NeoMatrix
 {
 
-    uint32_t* pixels;
+    uint32_t pixels[13 * 13];
     /**
-     * Pixel buffer for the NeoMatrix. 
+     * Pixel buffer for the NeoMatrix. Each element contains the color
+     * data for pixel (row, col). Maximum of 169 elements.
      */
 
     uint8_t num_rows, num_cols;
