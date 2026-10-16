@@ -56,17 +56,16 @@ int main()
 
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
-    bool led_on = false;
-    absolute_time_t next_toggle = make_timeout_time_ms(BLINK_INTERVAL_MS);
+
+    bool led_on = true;
+    gpio_put(LED_PIN, led_on);
 
     LIS3DH lis3dh;
     NeoMatrix neomatrix(MATRIX_WIDTH, MATRIX_HEIGHT);
 
     if (lis3dh.init())
     {
-        led_on = true;
-        gpio_put(LED_PIN, led_on);
-        next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
+
     }
 
     while (true)
