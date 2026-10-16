@@ -17,6 +17,9 @@ namespace
     constexpr uint32_t RED   = 0xFF0000;
     constexpr uint32_t GREEN = 0x00FF00;
 
+    constexpr uint LED_PIN = 13;
+    constexpr uint32_t BLINK_INTERVAL_MS = 1000;
+
 
     void display_level(NeoMatrix& neomatrix, float x, float y)
     {
@@ -51,11 +54,32 @@ int main()
 {
     stdio_init_all();
 
+    gpio_init(LED_PIN);
+    gpio_set_dir(LED_PIN, GPIO_OUT);
+    bool led_on = false;
+    absolute_time_t next_toggle = make_timeout_time_ms(BLINK_INTERVAL_MS);
+
     LIS3DH lis3dh;
     NeoMatrix neomatrix(MATRIX_WIDTH, MATRIX_HEIGHT);
 
-    while(!lis3dh.init());
-    while (!neomatrix.init());
+    while(!lis3dh.init())
+    {
+        if (absolute_time_diff_us(get_absolute_time(), next_toggle) <= 0)
+        {
+            led_on = !led_on;
+            gpio_put(LED_PIN, led_on);
+            next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
+        }
+    }
+    while (!neomatrix.init())
+    {
+        if (absolute_time_diff_us(get_absolute_time(), next_toggle) <= 0)
+        {
+            led_on = !led_on;
+            gpio_put(LED_PIN, led_on);
+            next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
+        }
+    }
 
     while (true)
     {
