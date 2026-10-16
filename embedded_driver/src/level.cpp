@@ -32,13 +32,13 @@ namespace
         }
         else if (std::fabs(x) >= std::fabs(y))
         {
-            // X-axis tilt: one red LED on the left or right.
+            // x axis tilt
             uint8_t col = (x > 0.0f) ? 7 : 0;
             neomatrix.set_pixel(3, col, RED);
         }
         else
         {
-            // Y-axis tilt: one red LED at the top or bottom.
+            // y axis tilt
             uint8_t row = (y > 0.0f) ? 0 : 7;
             neomatrix.set_pixel(row, 3, RED);
         }
@@ -54,17 +54,8 @@ int main()
     LIS3DH lis3dh;
     NeoMatrix neomatrix(MATRIX_WIDTH, MATRIX_HEIGHT);
 
-    if (!lis3dh.init())
-    {
-        while (true)
-            tight_loop_contents();
-    }
-
-    if (!neomatrix.init())
-    {
-        while (true)
-            tight_loop_contents();
-    }
+    while(!lis3dh.init());
+    while (!neomatrix.init());
 
     while (true)
     {
