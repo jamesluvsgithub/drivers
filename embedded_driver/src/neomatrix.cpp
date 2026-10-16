@@ -77,7 +77,7 @@ void NeoMatrix::clear_pixels(void)
 {
     for (uint16_t i = 0; i < num_rows * num_cols; ++i) 
     {
-        pixels[i] = 0;
+        pixels[i] = 0xFFFF;
     }
 }
 
