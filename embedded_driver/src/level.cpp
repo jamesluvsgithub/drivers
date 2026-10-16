@@ -58,13 +58,14 @@ int main()
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
     bool led_on = true;
-    gpio_put(LED_PIN, led_on);
 
     LIS3DH lis3dh;
 
-    gpio_put(LED_PIN, !led_on);
+    gpio_put(LED_PIN, led_on);
 
     NeoMatrix neomatrix(MATRIX_WIDTH, MATRIX_HEIGHT);
+
+    gpio_put(LED_PIN, !led_on);
 
     if (lis3dh.init())
     {
