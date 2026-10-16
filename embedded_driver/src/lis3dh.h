@@ -14,7 +14,7 @@ public:
     /**
      * Relevant LIS3DH addresses.
      */
-    static constexpr int LIS3DH_ADDR = 0x19;
+    static constexpr int LIS3DH_ADDR = 0x18;
     static constexpr uint8_t WHO_AM_I_ADDR = 0x0F;
     static constexpr uint8_t CTRL_REG_1_ADDR = 0x20;
     static constexpr uint8_t CTRL_REG_4_ADDR = 0x23;
