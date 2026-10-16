@@ -65,7 +65,7 @@ int main()
 
     if (!lis3dh.init() || !neomatrix.init())
     {
-        gpio_put(LED_PIN, LED_ON);
+        //gpio_put(LED_PIN, LED_ON);
     }
 
     while (true)
