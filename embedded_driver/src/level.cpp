@@ -68,25 +68,12 @@ int main()
         gpio_put(LED_PIN, led_on);
         next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
     }
-    if (!neomatrix.init())
-    {
-        led_on = true;
-        gpio_put(LED_PIN, led_on);
-        next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
-    }
 
     while (true)
     {
         lis3dh.update();
 
         display_level(neomatrix, lis3dh.get_x(), lis3dh.get_y());
-
-        if (absolute_time_diff_us(get_absolute_time(), next_toggle) <= 0)
-        {
-            led_on = !led_on;
-            gpio_put(LED_PIN, led_on);
-            next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
-        }
 
         sleep_ms(50);
     }
