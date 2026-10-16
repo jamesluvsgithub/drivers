@@ -41,13 +41,6 @@ public:
      * @return None.
      */
     NeoMatrix(uint8_t width, uint8_t height);
-
-    /**
-     * @brief Destructor. Deallocates the *pixels* buffer.
-     *
-     * @return None.
-     */
-    ~NeoMatrix();
     
     /**
      * @brief Initializes the LED matrix.
