@@ -56,6 +56,7 @@ namespace
 int main()
 {
     stdio_init_all();
+    sleep_ms(250);
 
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
