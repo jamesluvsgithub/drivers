@@ -62,23 +62,17 @@ int main()
     LIS3DH lis3dh;
     NeoMatrix neomatrix(MATRIX_WIDTH, MATRIX_HEIGHT);
 
-    while(!lis3dh.init())
+    if (!lis3dh.init())
     {
-        if (absolute_time_diff_us(get_absolute_time(), next_toggle) <= 0)
-        {
-            led_on = !led_on;
-            gpio_put(LED_PIN, led_on);
-            next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
-        }
+        led_on = true;
+        gpio_put(LED_PIN, led_on);
+        next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
     }
-    while (!neomatrix.init())
+    if (!neomatrix.init())
     {
-        if (absolute_time_diff_us(get_absolute_time(), next_toggle) <= 0)
-        {
-            led_on = !led_on;
-            gpio_put(LED_PIN, led_on);
-            next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
-        }
+        led_on = true;
+        gpio_put(LED_PIN, led_on);
+        next_toggle = delayed_by_ms(next_toggle, BLINK_INTERVAL_MS);
     }
 
     while (true)
